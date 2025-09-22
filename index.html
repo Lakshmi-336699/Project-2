@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant Menu Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #d35400;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem;
+    }
+
+    input[type="text"], select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .menu-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin: 0.5rem 0;
+    }
+
+    .card p {
+      margin: 0.3rem 0;
+      color: #555;
+    }
+
+    .price {
+      color: #e67e22;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🍴 Restaurant Menu Dashboard</h1>
+  </header>
+
+  <div class="controls">
+    <input type="text" id="searchBox" placeholder="Search dish...">
+    <select id="categoryFilter">
+      <option value="all">All Categories</option>
+      <option value="starters">Starters</option>
+      <option value="main">Main Course</option>
+      <option value="desserts">Desserts</option>
+      <option value="drinks">Drinks</option>
+    </select>
+  </div>
+
+  <div class="menu-container" id="menu">
+    <!-- Sample Menu Items -->
+    <div class="card" data-category="starters">
+      <h3>Spring Rolls</h3>
+      <p>Crispy rolls stuffed with veggies</p>
+      <p class="price">$5</p>
+    </div>
+
+    <div class="card" data-category="main">
+      <h3>Grilled Chicken</h3>
+      <p>Served with salad & fries</p>
+      <p class="price">$12</p>
+    </div>
+
+    <div class="card" data-category="main">
+      <h3>Veggie Pasta</h3>
+      <p>Pasta with seasonal vegetables</p>
+      <p class="price">$10</p>
+    </div>
+
+    <div class="card" data-category="desserts">
+      <h3>Chocolate Cake</h3>
+      <p>Rich dark chocolate delight</p>
+      <p class="price">$6</p>
+    </div>
+
+    <div class="card" data-category="desserts">
+      <h3>Ice Cream Sundae</h3>
+      <p>Vanilla ice cream with toppings</p>
+      <p class="price">$4</p>
+    </div>
+
+    <div class="card" data-category="drinks">
+      <h3>Lemonade</h3>
+      <p>Fresh & chilled</p>
+      <p class="price">$3</p>
+    </div>
+
+    <div class="card" data-category="drinks">
+      <h3>Coffee</h3>
+      <p>Hot brewed coffee</p>
+      <p class="price">$2</p>
+    </div>
+  </div>
+
+  <script>
+    const searchBox = document.getElementById('searchBox');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const menuItems = document.querySelectorAll('.card');
+
+    function filterMenu() {
+      const searchText = searchBox.value.toLowerCase();
+      const category = categoryFilter.value;
+
+      menuItems.forEach(item => {
+        const name = item.querySelector('h3').innerText.toLowerCase();
+        const itemCategory = item.getAttribute('data-category');
+
+        const matchesSearch = name.includes(searchText);
+        const matchesCategory = (category === 'all' || category === itemCategory);
+
+        if (matchesSearch && matchesCategory) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    }
+
+    searchBox.addEventListener('input', filterMenu);
+    categoryFilter.addEventListener('change', filterMenu);
+  </script>
+</body>
+</html>
